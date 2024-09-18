@@ -65,15 +65,21 @@ export const formatDateTime = (dateString: Date) => {
   };
 };
 
-export function formatAmount(amount: number): string {
+export function formatAmount(amount: number, currency: "USD" | "NGN" = "USD"): string {
+  // Ensure the currency is a valid ISO 4217 currency code
+  if (currency !== "USD" && currency !== "NGN") {
+    throw new Error("Invalid currency code. Use 'USD' or 'NGN'.");
+  }
+
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "USD",
+    currency: currency,
     minimumFractionDigits: 2,
   });
 
   return formatter.format(amount);
 }
+
 
 export const parseStringify = (value: any) => JSON.parse(JSON.stringify(value));
 
