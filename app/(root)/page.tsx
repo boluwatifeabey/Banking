@@ -1,17 +1,31 @@
-import HeaderBox from '@/components/HeaderBox'
+'use client'
+
+import { useState, useEffect } from 'react';
+import HeaderBox from '@/components/HeaderBox';
 import RightSidebar from '@/components/RightSidebar';
 import TotalBalanceBox from '@/components/TotalBalanceBox';
+import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 const Home = () => {
-  const loggedIn = { firstName: 'Abiodun', lastName:'JSM', email: 'admin@admin.pro'};
+  const [loggedIn, setLoggedIn] = useState<User | null>(null);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getLoggedInUser();
+      setLoggedIn(user); 
+    };
+    fetchUser();
+  }, []);
+
+  const userName = loggedIn?.name || 'Guest';
+
   return (
     <section className='home'>
       <div className="home-content">
         <header className="home-header">
           <HeaderBox 
-            type="greetings"
-            title="welcome"
-            user={loggedIn?.firstName  || 'Guest'}
+            type="greeting"
+            title="Welcome"
+            user={userName} 
             subtext="Access and manage your Account and transactions efficiently."
           />
           <TotalBalanceBox 
@@ -20,15 +34,15 @@ const Home = () => {
             totalCurrentBalance={1250.35}
           />
         </header>
-        RECENT TRANSCATIONS
+        RECENT TRANSACTIONS
       </div>
       <RightSidebar
-        user={loggedIn}
+        user={loggedIn}  // Pass the entire user object to the sidebar
         transactions={[]}
-        banks={[{currentBalance: 123.50}, {currentBalance: 123.60}]}
+        banks={[{ currentBalance: 123.50 }, { currentBalance: 123.60 }]}
       />
     </section>
-  )
+  );
 }
 
-export default Home
+export default Home;

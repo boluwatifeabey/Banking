@@ -7,6 +7,6 @@ const SignIn = () => {
       <AuthForm type="sign-in" />
     </section>
   )
-}
+} 
 
 export default SignIn
