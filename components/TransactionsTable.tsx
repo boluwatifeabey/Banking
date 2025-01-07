@@ -71,7 +71,7 @@ const TransactionsTable = ({ transactions } : TransactionTableProps) => {
                             { t.paymentChannel }
                         </TableCell>
                         <TableCell className="pl-2 pr-10 max-md:hidden">
-                            <CategoryBadge category={ t.category } />
+                            <CategoryBadge category={t.category} />
                         </TableCell>
                     </TableRow>
                 )

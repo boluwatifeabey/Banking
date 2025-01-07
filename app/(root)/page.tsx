@@ -7,10 +7,24 @@ import { getLoggedInUser } from '@/lib/actions/user.actions';
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const currentPage = Number(page as string) || 1;
-  const loggedIn = await getLoggedInUser();
-  const accounts = await getAccounts({ 
-    userId: loggedIn.$id 
-  })
+
+  let loggedIn, accounts;
+    try {
+      loggedIn = await getLoggedInUser();
+      if (!loggedIn) throw new Error('User not logged in');
+
+      accounts = await getAccounts({ 
+        userId: loggedIn.$id 
+      });
+    } catch (error) {
+      console.error('Error fetching user or accounts:', error);
+      return <p>Error: Unable to fetch user or account information.</p>;
+    }
+
+  // const loggedIn = await getLoggedInUser();
+  // const accounts = await getAccounts({ 
+  //   userId: loggedIn.$id 
+  // })
 
   if(!accounts) return;
   

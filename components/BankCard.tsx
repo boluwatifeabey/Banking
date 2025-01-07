@@ -5,14 +5,14 @@ import React from 'react'
 import Copy from './Copy'
 
 const BankCard = ({ account, userName, showBalance = true}: CreditCardProps) => {
-    console.log(account);
+    // console.log(account);
   return (
     <div className='flex flex-col '>
         <Link href={`/transaction-history/?id=${account.appwriteItemId}`} className='bank-card '>
             <div className="bank-card_content">
                 <div>
                     <h1 className="text-16 font-semibold text-white">
-                        { userName }
+                        { account.name }
                     </h1>
                     <p className="font-ibm-plex-serif font-black text-white">
                         {formatAmount(account.currentBalance)}
@@ -55,7 +55,7 @@ const BankCard = ({ account, userName, showBalance = true}: CreditCardProps) => 
                 className='absolute top-0 left-0'
             />
         </Link>
-        {showBalance && <Copy title={account?.sharableId} /> }
+        {showBalance && <Copy title={account?.sharaebleId || 'No ID Available'} />}
     </div>
   )
 }
